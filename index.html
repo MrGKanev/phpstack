@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced LAMP/LEMP Stack Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-3xl font-bold text-center mb-6">Advanced LAMP/LEMP Stack Calculator</h1>
+        <div class="flex flex-wrap -mx-3">
+            <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <div id="services" class="mb-6">
+                        <!-- Service toggles will be dynamically inserted here -->
+                    </div>
+                    <div class="mb-6">
+                        <label for="concurrentUsers" class="block text-gray-700 text-sm font-bold mb-2">
+                            Concurrent Users: <span id="concurrentUsersValue">100</span>
+                        </label>
+                        <input type="range" id="concurrentUsers" min="10" max="1000" value="100" 
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    <div class="mb-6">
+                        <label for="storage" class="block text-gray-700 text-sm font-bold mb-2">
+                            Storage (GB): <span id="storageValue">20</span>
+                        </label>
+                        <input type="range" id="storage" min="10" max="1000" value="20" 
+                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                    <div id="results" class="bg-gray-100 p-4 rounded-md">
+                        <h2 class="text-lg font-semibold mb-2">Estimated Resources:</h2>
+                        <p>CPU: <span id="cpuResult">0</span> cores</p>
+                        <p>RAM: <span id="ramResult">0</span> GB</p>
+                        <p>Storage: <span id="storageResult">20</span> GB</p>
+                    </div>
+                    <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+                        <strong class="font-bold">Error!</strong>
+                        <span class="block sm:inline" id="errorMessage"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 px-3">
+                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <h2 class="text-2xl font-bold mb-4">Tutorials</h2>
+                    <ul class="list-disc pl-5">
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">Setting up a LAMP stack</a></li>
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">Setting up a LEMP stack</a></li>
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">Optimizing Apache performance</a></li>
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">Optimizing Nginx performance</a></li>
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">MySQL tuning guide</a></li>
+                        <li><a href="#" class="text-blue-500 hover:text-blue-700">PHP-FPM configuration best practices</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="bg-gray-200 text-center lg:text-left">
+        <div class="text-gray-700 text-center p-4">
+            © <span id="current-year"></span> Created by 
+            <a class="text-blue-600 hover:text-blue-800" href="https://gkanev.com">Gabriel Kanev</a>.
+            Open source on 
+            <a class="text-blue-600 hover:text-blue-800" href="https://github.com/MrGKanev/phpstack">GitHub</a>.
+        </div>
+    </footer>
+
+    <script>
+        const services = {
+            Apache: { cpu: 1, ram: 1, settings: "MaxRequestWorkers: 150, KeepAlive: On" },
+            Nginx: { cpu: 0.5, ram: 0.5, settings: "worker_processes: auto, worker_connections: 1024" },
+            PHP: { cpu: 0.5, ram: 0.5, settings: "max_execution_time: 30, memory_limit: 128M" },
+            MySQL: { cpu: 1, ram: 1, settings: "innodb_buffer_pool_size: 50% of RAM, max_connections: 100" },
+            Redis: { cpu: 0.5, ram: 0.5, settings: "maxmemory: 2gb, maxmemory-policy: allkeys-lru" },
+        Memcached: { cpu: 0.5, ram: 0.5, settings: "-m 64 -c 1024 -t 4" },
+            MariaDB: { cpu: 1, ram: 1, settings: "innodb_buffer_pool_size: 50% of RAM, max_connections: 100" },
+            PostgreSQL: { cpu: 1, ram: 1, settings: "shared_buffers: 25% of RAM, max_connections: 100" },
+            NodeJS: { cpu: 0.5, ram: 0.5, settings: "max-old-space-size: 2048" },
+            MongoDB: { cpu: 1, ram: 1, settings: "wiredTigerCacheSizeGB: 1" }
+        };
+
+        const config = {
+            concurrentUsers: 100,
+            storage: 20,
+        };
+
+        function createServiceToggles() {
+            const servicesContainer = document.getElementById('services');
+            for (const [service, requirements] of Object.entries(services)) {
+                const toggle = document.createElement('div');
+                toggle.className = 'flex items-center justify-between mb-4';
+                toggle.innerHTML = `
+                    <span class="text-gray-700">${service}</span>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" value="" class="sr-only peer" id="${service}Toggle">
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                    </label>
+                `;
+                servicesContainer.appendChild(toggle);
+                document.getElementById(`${service}Toggle`).addEventListener('change', calculateResources);
+            }
+        }
+
+        function calculateResources() {
+            let totalCPU = 0;
+            let totalRAM = 0;
+
+            for (const [service, requirements] of Object.entries(services)) {
+                if (document.getElementById(`${service}Toggle`).checked) {
+                    totalCPU += requirements.cpu;
+                    totalRAM += requirements.ram;
+                }
+            }
+
+            totalCPU += Math.floor(config.concurrentUsers / 100);
+            totalRAM += Math.floor(config.concurrentUsers / 50);
+
+            document.getElementById('cpuResult').textContent = totalCPU.toFixed(1);
+            document.getElementById('ramResult').textContent = totalRAM.toFixed(1);
+            document.getElementById('storageResult').textContent = config.storage;
+
+            checkResourceLimits(totalCPU, totalRAM);
+        }
+
+        function checkResourceLimits(cpu, ram) {
+            const errorElement = document.getElementById('error');
+            const errorMessageElement = document.getElementById('errorMessage');
+            
+            if (cpu > 8 || ram > 16) {
+                errorElement.classList.remove('hidden');
+                errorMessageElement.textContent = 'Warning: The selected configuration exceeds recommended resource limits.';
+            } else {
+                errorElement.classList.add('hidden');
+            }
+        }
+
+        function updateSliderValue(sliderId, valueId) {
+            const slider = document.getElementById(sliderId);
+            const valueDisplay = document.getElementById(valueId);
+            slider.addEventListener('input', function() {
+                valueDisplay.textContent = this.value;
+                config[sliderId] = parseInt(this.value);
+                calculateResources();
+            });
+        }
+
+        createServiceToggles();
+        updateSliderValue('concurrentUsers', 'concurrentUsersValue');
+        updateSliderValue('storage', 'storageValue');
+        calculateResources();
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
