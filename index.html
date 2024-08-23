@@ -14,70 +14,108 @@
     <meta property="og:image" content="https://phpstack.gkanev.com/path-to-your-image.jpg">
     <link rel="canonical" href="https://phpstack.gkanev.com">
     <link href="src/output.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tippy.js@6.3.7/dist/tippy-bundle.umd.min.js"></script>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-6">Advanced LAMP/LEMP Stack Calculator</h1>
-        <div class="flex flex-wrap -mx-3">
-            <div class="w-full md:w-2/3 px-3 mb-6 md:mb-0">
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <div id="services" class="mb-6">
-                        <!-- Service toggles will be dynamically inserted here -->
-                    </div>
-                    <div class="mb-6">
-                        <label for="concurrentUsers" class="block text-gray-700 text-sm font-bold mb-2">
-                            Concurrent Users: <span id="concurrentUsersValue">100</span>
-                        </label>
-                        <input type="range" id="concurrentUsers" min="10" max="1000" value="100" 
-                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                    </div>
-                    <div class="mb-6">
-                        <label for="storage" class="block text-gray-700 text-sm font-bold mb-2">
-                            Storage (GB): <span id="storageValue">20</span>
-                        </label>
-                        <input type="range" id="storage" min="10" max="1000" value="20" 
-                            class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
-                    </div>
-                    <div id="results" class="bg-gray-100 p-4 rounded-md">
-                        <h2 class="text-lg font-semibold mb-2">Estimated Resources for static/optimized:</h2>
-                        <p>CPU: <span id="cpuResult">0</span> cores</p>
-                        <p>RAM: <span id="ramResult">0</span> GB</p>
-                        <p>Storage: <span id="storageResult">20</span> GB</p>
-                    </div>
-                    <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
-                        <strong class="font-bold">Error!</strong>
-                        <span class="block sm:inline" id="errorMessage"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full md:w-1/3 px-3">
-                <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <h2 class="text-2xl font-bold mb-4">Other Calculators</h2>
-                    <ul class="list-disc pl-5 mb-6">
-                        <li><a href="https://php-fpm.gkanev.com/" class="text-blue-500 hover:text-blue-700">PHP-FPM Calculator</a></li>
-                        <li><a href="https://database.gkanev.com/" class="text-blue-500 hover:text-blue-700">MySQL/MariaDB Calculator</a></li>
-                    </ul>
-                    <h2 class="text-2xl font-bold mb-4">Tutorials</h2>
-                    <ul class="list-disc pl-5">
-                        <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-20-04" class="text-blue-500 hover:text-blue-700">Setting up a LAMP stack</a></li>
-                        <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-20-04" class="text-blue-500 hover:text-blue-700">Setting up a LEMP stack</a></li>
-                        <li><a href="https://httpd.apache.org/docs/2.4/misc/perf-tuning.html" class="text-blue-500 hover:text-blue-700">Optimizing Apache performance</a></li>
-                        <li><a href="https://www.nginx.com/blog/tuning-nginx/" class="text-blue-500 hover:text-blue-700">Optimizing Nginx performance</a></li>
-                        <li><a href="https://dev.mysql.com/doc/refman/8.0/en/optimization.html" class="text-blue-500 hover:text-blue-700">MySQL tuning guide</a></li>
-                        <li><a href="https://www.php.net/manual/en/install.fpm.configuration.php" class="text-blue-500 hover:text-blue-700">PHP-FPM configuration best practices</a></li>
-                    </ul>
-                </div>
-                <footer class="bg-gray-200 text-center lg:text-left mt-4 rounded">
-                    <div class="text-gray-700 text-center p-4">
-                        © <span id="current-year"></span> Created by 
-                        <a class="text-blue-600 hover:text-blue-800" href="https://gkanev.com">Gabriel Kanev</a>.
-                        Want to help? Check out the project on 
-                        <a class="text-blue-600 hover:text-blue-800" href="https://github.com/MrGKanev/phpstack">GitHub</a>.
-                    </div>
-                </footer>
-            </div>
+       <div class="container mx-auto p-6">
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold text-center mb-6">Advanced LAMP/LEMP Stack Calculator</h1>
+
+  <div class="flex flex-wrap -mx-3">
+    <div class="w-full lg:w-2/3 px-3 mb-6 lg:mb-0">
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-xl font-semibold mb-4">Service Selection</h2>
+        <div id="services" class="mb-6"></div>
+
+        <h2 class="text-xl font-semibold mb-4">Configuration</h2>
+        <div class="mb-6">
+          Concurrent Users: <span id="concurrentUsersValue">100</span>
+          <input type="range" id="concurrentUsers" min="1" max="1000" value="100" class="w-full">
+          <p>Adjust the slider to set the number of concurrent users.</p>
         </div>
+
+        <div class="mb-6">
+          Storage (GB): <span id="storageValue">20</span>
+          <input type="range" id="storage" min="1" max="1000" value="20" class="w-full">
+          <p>Adjust the slider to set the required storage in GB.</p>
+        </div>
+
+        <h2 class="text-xl font-semibold mb-4">Recommended Configurations</h2>
+        <div class="mb-6">
+            <button id="basicWordPress" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">Basic WordPress</button>
+            <button id="ecommerce" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2 mb-2">E-commerce Site</button>
+            <button id="highTraffic" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded mb-2">High Traffic Blog</button>
+        </div>
+
+        <div id="results" class="bg-gray-100 p-4 rounded-md">
+          <h2 class="text-lg font-semibold mb-2">Estimated Resources:</h2>
+          <div id="detailedResults"></div>
+        </div>
+
+        <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-4" role="alert">
+          <strong>Error!</strong> <span id="errorMessage" class="block sm:inline"></span>
+        </div>
+      </div>
+
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">What is a LAMP/LEMP stack?</h3>
+                        <p>LAMP stands for Linux, Apache, MySQL, and PHP. LEMP is similar, but uses Nginx (pronounced "Engine-X") instead of Apache. These are popular web service stacks used for developing and deploying web applications.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">How accurate are the resource estimates?</h3>
+                        <p>The estimates provided are based on general usage patterns and may vary depending on your specific configuration and workload. They should be used as a starting point for your resource planning.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Can I use this calculator for cloud hosting planning?</h3>
+                        <p>Yes, this calculator can be useful for estimating resource needs when planning cloud hosting. However, always consult with your cloud provider for more precise recommendations based on their specific offerings.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">What do the recommended configurations represent?</h3>
+                        <p>The recommended configurations (Basic WordPress, E-commerce Site, High Traffic Blog) are preset scenarios to give you a quick starting point based on common use cases. You can further customize these based on your specific needs.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">How do I determine the number of concurrent users for my site?</h3>
+                        <p>Concurrent users represent the number of active users on your site at any given time. You can estimate this using analytics tools or by taking about 10% of your daily active users as a rough guideline.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2">Why might I choose Nginx over Apache, or vice versa?</h3>
+                        <p>Nginx is often chosen for its high performance with static content and as a reverse proxy, while Apache is known for its flexibility and wide range of modules. The choice depends on your specific needs and familiarity with each server.</p>
+                    </div>
+                </div>
+      </div>
     </div>
+
+    <div class="w-full lg:w-1/3 px-3">
+      <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h2 class="text-2xl font-bold mb-4">Other Calculators</h2>
+        <ul class="list-disc pl-5 mb-8">
+          <li><a href="https://php-fpm.gkanev.com/" class="text-blue-500 hover:text-blue-700">PHP-FPM Calculator</a></li>
+          <li><a href="https://database.gkanev.com/" class="text-blue-500 hover:text-blue-700">MySQL/MariaDB Calculator</a></li>
+        </ul>
+
+        <h2 class="text-2xl font-bold mb-4">Tutorials</h2>
+        <ul class="list-disc pl-5 mb-8">
+          <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-20-04" class="text-blue-500 hover:text-blue-700">Setting up a LAMP stack</a></li>
+          <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-20-04" class="text-blue-500 hover:text-blue-700">Setting up a LEMP stack</a></li>
+          <li><a href="https://httpd.apache.org/docs/2.4/misc/perf-tuning.html" class="text-blue-500 hover:text-blue-700">Optimizing Apache performance</a></li>
+          <li><a href="https://www.nginx.com/blog/tuning-nginx/" class="text-blue-500 hover:text-blue-700">Optimizing Nginx performance</a></li>
+          <li><a href="https://dev.mysql.com/doc/refman/8.0/en/optimization.html" class="text-blue-500 hover:text-blue-700">MySQL tuning guide</a></li>
+          <li><a href="https://www.php.net/manual/en/install.fpm.configuration.php" class="text-blue-500 hover:text-blue-700">PHP-FPM configuration best practices</a></li>
+        </ul>
+
+        <footer class="text-center mt-8 border-t pt-4">
+          © <span id="current-year"></span> Created by <a href="https://gkanev.com" class="text-blue-600 hover:text-blue-800">Gabriel Kanev</a>. Want to help? Check out the project on <a href="https://github.com/MrGKanev/phpstack" class="text-blue-600 hover:text-blue-800">GitHub</a>.
+        </footer>
+      </div>
+    </div>
+  </div>
+</div>
+
     <script src="src/script.js"></script>
 </body>
 </html>
