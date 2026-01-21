@@ -1,86 +1,83 @@
-# PHP Stack - Advanced LAMP/LEMP Stack Calculator
+# Stack Calculator 2026
 
-This project provides an advanced calculator for estimating resource requirements for LAMP (Linux, Apache, MySQL, PHP) and LEMP (Linux, Nginx, MySQL, PHP) stacks. It helps users determine the appropriate CPU, RAM, and storage needs based on their selected services and expected concurrent users.
+Modern web stack resource calculator for LAMP, LEMP, and next-gen architectures. Calculate optimal CPU, RAM, and storage for your infrastructure with real-time cloud provider cost estimates.
+
+## What's New in 2026
+
+- **Modern Runtimes**: Bun, Deno alongside Node.js and PHP 8.4+
+- **New Web Servers**: Caddy (auto-HTTPS), LiteSpeed
+- **Updated Caching**: Valkey (open-source Redis fork) replaces Redis as the recommended option
+- **Vector Database**: Qdrant for AI/ML applications
+- **SQLite**: For edge computing and serverless architectures
+- **Cloud Pricing**: Real-time estimates for Hetzner, DigitalOcean, Vultr, AWS
+- **Dark Mode**: System-aware with manual toggle
+- **Export Configs**: JSON and YAML export for IaC workflows
 
 ## Features
 
-- Interactive service selection for common web stack components
-- Concurrent user and storage requirement inputs
-- Real-time resource calculation
-- Recommended configurations for common use cases
-- Responsive design for desktop and mobile use
-- Links to additional calculators and tutorials
+- **18 Services** across 4 categories (Web Servers, Runtimes, Databases, Caching)
+- **6 Quick Presets**: WordPress, E-commerce, High Traffic, JAMstack 2026, Microservices, AI-Ready
+- **Real-time Calculations**: Instant resource updates as you configure
+- **Cloud Cost Estimates**: Monthly pricing for major providers
+- **Export Options**: Download your config as JSON or YAML
+- **Responsive Design**: Works on desktop, tablet, and mobile
+- **Accessibility**: Keyboard navigation, ARIA labels, screen reader support
 
-## Getting Started
+## Supported Services
 
-### Prerequisites
+### Web Servers
+- Apache, Nginx, Caddy, LiteSpeed
 
-- Node.js and npm (for development)
-- A modern web browser
+### Runtimes
+- PHP 8.4+, Node.js, Bun, Deno
 
-### Installation
+### Databases
+- MySQL, MariaDB, PostgreSQL, MongoDB, SQLite, Qdrant (vector DB)
 
-1. Clone the repository:
+### Caching & Messaging
+- Valkey, Redis, Memcached, RabbitMQ
 
-   ```
-   git clone https://github.com/MrGKanev/phpstack.git
-   ```
+## Quick Start
 
-2. Navigate to the project directory:
+```bash
+# Clone
+git clone https://github.com/MrGKanev/phpstack.git
+cd phpstack
 
-   ```
-   cd phpstack
-   ```
+# Install dependencies
+npm install
 
-3. Install the dependencies:
-
-   ```
-   npm install
-   ```
-
-### Development
-
-To start development, run the following command to watch for changes in the CSS:
-
-```
+# Development (watch mode)
 npx tailwindcss -i ./src/input.css -o ./src/output.css --watch
+
+# Production build
+npx tailwindcss -i ./src/input.css -o ./src/output.css --minify
 ```
 
-### Building for Production
+Open `index.html` in your browser.
 
-To generate a minified version of the CSS for production:
+## Tech Stack
 
-```
-npx tailwindcss -o ./src/output.css --minify 
-```
-
-## Usage
-
-Open `index.html` in a web browser to use the calculator. Select the services you need, adjust the concurrent users and storage requirements, and view the estimated resource needs.
+- **Tailwind CSS 4** - Utility-first CSS
+- **Vanilla JavaScript** - No frameworks, fast loading
+- **Tippy.js** - Tooltips
 
 ## Contributing
 
-Contributions to the PHP Stack are welcome! Here's how you can contribute:
-
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature/YourFeature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add some feature'`)
-5. Push to the branch (`git push origin feature/YourFeature`)
-6. Open a Pull Request
-
-Please ensure your code adheres to the existing style and that you've tested your changes thoroughly.
+1. Fork the repo
+2. Create a feature branch: `git checkout -b feature/new-service`
+3. Commit changes: `git commit -m 'Add new service'`
+4. Push: `git push origin feature/new-service`
+5. Open a Pull Request
 
 ## License
 
-This project is open source and available under the [MIT License](LICENSE).
+MIT License - see [LICENSE](LICENSE)
 
 ## Author
 
-Created by [Gabriel Kanev](https://gkanev.com)
+[Gabriel Kanev](https://gkanev.com)
 
-## Acknowledgments
+---
 
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Tippy.js](https://atomiks.github.io/tippyjs/) for tooltips
-- The open-source community for inspiration and resources
+**Live Demo**: [phpstack.gkanev.com](https://phpstack.gkanev.com)
